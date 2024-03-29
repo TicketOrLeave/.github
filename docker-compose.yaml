@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DB_NAME: postgres
+      DB_USER: TUUUUUUT
+      DB_PASS: TUUUUUUT
+      DB_HOST: db
+      DB_PORT: 5432
+      SECRET_KEY: 
+      NEXTAUTH_URL: 
+      FRONTEND_URL: http://clinet:3000/invitation
+      MAIL_USERNAME: 
+      MAIL_PASSWORD: 
+      MAIL_FROM: 
+      MAIL_PORT: 
+      MAIL_SERVER: smtp.gmail.com
+      TEMPLATE_FOLDER: app/utilities/templates
+      CLIENT_URL: http://clinet:3000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.0-alpine
+    environment:
+      POSTGRES_USER: TUUUUUUT
+      POSTGRES_PASSWORD: TUUUUUUT
+      POSTGRES_DB: postgres
+    ports:
+      - "3330:5432"
+
+  clinet:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    ports:
+      - "3051:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: 
+      GOOGLE_CLIENT_ID: 
+      GOOGLE_CLIENT_SECRET: 
+      GITHUB_SECRET: 
+      GITHUB_ID: 
+      NEXTAUTH_URL: 
+      NEXTAUTH_SECRET: 
+      SERVER_API_URL: 
+      UPLOADTHING_SECRET: 
+      UPLOADTHING_APP_ID: 
+
+    depends_on:
+      - backend
